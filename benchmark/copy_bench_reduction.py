@@ -54,21 +54,21 @@ def test_index_scatter(file, dataset, feature_size, device):
     output_SR = torch.zeros(num_nodes, feature_size, dtype=torch.float32, device='cuda')
     output_PR = torch.zeros(num_nodes, feature_size, dtype=torch.float32, device='cuda')
     output_torch = torch.zeros(num_nodes, feature_size, dtype=torch.float32, device='cuda')
-    output_geot = torch.zeros(num_nodes, feature_size, dtype=torch.float32, device='cuda')
+    output_cuda = torch.zeros(num_nodes, feature_size, dtype=torch.float32, device='cuda')
     
     # check correctness
     sr(idx, src, output_SR, num_edges, feature_size, 32)
     pr(idx, src, output_PR, num_edges, feature_size, 32)
     output_torch = torch_scatter_reduce(idx, src)
-    output_geot = index_scatter_reduce(idx, src)
+    output_cuda = index_scatter_reduce(idx, src)
     # find out non-zero elements
     diff_SR = torch.abs(output_torch - output_SR)
     diff_PR = torch.abs(output_torch - output_PR)
-    diff_geot = torch.abs(output_torch - output_geot)
+    diff_cuda = torch.abs(output_torch - output_cuda)
     # print out where the difference is
     print(f'diff_SR: {diff_SR.max()}, location: {torch.argmax(diff_SR)}')
     print(f'diff_PR: {diff_PR.max()}, location: {torch.argmax(diff_PR)}')
-    print(f'diff_geot: {diff_geot.max()}, location: {torch.argmax(diff_geot)}')
+    print(f'diff_cuda: {diff_cuda.max()}, location: {torch.argmax(diff_cuda)}')
     # total = torch.sum(diff > 1e-6)
     # print(f"Total non-zero elements: {total}")
     # assert torch.allclose(output_torch, output_PR)
