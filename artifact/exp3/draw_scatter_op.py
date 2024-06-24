@@ -2,7 +2,10 @@ import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 
-csv_path = "../SC24-Result/A100/benchop_index_scatter.csv"
+mode = "spmm"
+date = "0620"
+dir = f"../{date}results"
+csv_path = f"{dir}/bench_{mode}.csv"
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np

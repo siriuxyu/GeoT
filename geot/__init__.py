@@ -4,6 +4,7 @@ import torch
 from .index_scatter import index_scatter
 from .gather_scatter import gather_scatter
 from .gather_weight_scatter import gather_weight_scatter
+from .triton import launch_parallel_spmm, launch_parallel_reduction, launch_serial_spmm, launch_serial_reduction
 __version__ = '0.0.1'
 
 library = '_C'
